@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time-Unconditional Generative Speech Enhancement via Autonomous Rectified Flow</title>
+    
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/dist/babylon.js"></script>
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            line-height: 1.6;
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            color: #333;
+            background-color: #fcfcfc;
+        }
+        h1 { text-align: center; color: #111; font-size: 2em; margin-bottom: 10px; }
+        h2 { border-bottom: 2px solid #ddd; padding-bottom: 8px; margin-top: 40px; color: #222; }
+        .authors { text-align: center; font-size: 1.1em; font-weight: 500; margin-bottom: 5px; color: #222; }
+        .affiliations { text-align: center; font-size: 0.95em; font-style: italic; margin-bottom: 30px; color: #666; }
+        
+        .info-box {
+            background: #fff;
+            padding: 25px;
+            border: 1px solid #e5e5e5;
+            border-left: 6px solid #0056b3;
+            margin-bottom: 25px;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+        }
+        .info-box h3 { margin-top: 0; color: #0056b3; font-size: 1.2em; }
+        .info-box p { text-align: justify; margin-bottom: 0; font-size: 0.98em; }
+
+        .links-box {
+            background: #f4f6f8;
+            padding: 15px 20px;
+            border-radius: 4px;
+            margin-bottom: 35px;
+            font-size: 0.95em;
+        }
+        .links-box a { color: #0056b3; text-decoration: none; font-weight: bold; margin-right: 20px; }
+        .links-box a:hover { text-decoration: underline; }
+
+        /* 纯音频对照表样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0 40px 0;
+            background: #fff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+        }
+        th, td {
+            border: 1px solid #e0e0e0;
+            padding: 14px 10px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        th {
+            background-color: #f5f5f7;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        
+        audio {
+            width: 150px;
+            height: 32px;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        /* 自定义大图频谱图区域 */
+        .spec-container {
+            text-align: center;
+            margin: 30px 0;
+            background: #fff;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+        .full-spec-img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .text-left { text-align: left; font-size: 0.9em; font-weight: bold; color: #0056b3; }
+    </style>
+</head>
+<body>
+
+    <h1>Time-Unconditional Generative Speech Enhancement via Autonomous Rectified Flow</h1>
+    
+    <div class="authors">Wen Zhang, Wenbin Jiang, Yang Zhang, Xiaofei Zhou</div>
+    <div class="affiliations">Anonymous Submission</div>
+
+    <div class="info-box">
+        <h3>Abstract</h3>
+        <p>
+            Traditional generative speech enhancement (SE) models rely on explicit time step embeddings. However, SE is a strongly correlated task where clean and noisy speech share significant structural similarity. We propose the <strong>Autonomous Rectified Flow</strong> framework to challenge the necessity of temporal conditioning. By using a linear interpolation path, we mathematically reveal that the target vector field is fundamentally time-invariant. We introduce a time-unconditional network that eliminates explicit time step information, inferring the denoising direction solely from the spatial relationship between the current state and the noisy observation. Predicting this static field is equivalent to representing the noise distribution. This autonomous design prevents overfitting to temporal paths, significantly improving generation quality, robustness, and inference efficiency.
+        </p>
+    </div>
+
+    <div class="info-box">
+        <h3>Dataset</h3>
+        <p>
+            The proposed framework is evaluated on the standard <strong>VoiceBank+DEMAND</strong> dataset. 
+    </div>
+
+    <div class="links-box">
+        <strong>References & Codebases:</strong> 
+        <a href="https://github.com/seongq/flowmse.git" target="_blank">🔗 FLOWSE </a>
+        <a href="https://github.com/zhangwen0821/ARFSE.git" target="_blank">🔗 ARFSE</a>
+    </div>
+
+    <h2>1. Audio Performance Comparison</h2>
+    <p style="font-style: italic; color: #666; font-size: 0.92em; margin-top: -10px;">
+        Listen and compare the speech quality under different models and inference steps (NFE).
+    </p>
+
+    <table>
+        <thead>
+            <tr>
+                <th rowspan="2" style="width: 140px;">Sample ID</th>
+                <th rowspan="2">Noisy</th>
+                <th rowspan="2">Clean</th>
+                <th colspan="2">FLOWSE (Baseline)</th>
+                <th colspan="2">ARFSE (Proposed)</th>
+            </tr>
+            <tr>
+                <th>NFE = 1</th>
+                <th>NFE = 5</th>
+                <th>NFE = 1</th>
+                <th>NFE = 5</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td class="text-left">p232_250</td>
+                <td><audio controls src="wavs/noisy/p232_250.wav"></audio></td>
+                <td><audio controls src="wavs/clean/p232_250.wav"></audio></td>
+                <td><audio controls src="wavs/FLOWSE/NFE1/p232_250.wav"></audio></td>
+                <td><audio controls src="wavs/FLOWSE/NFE5/p232_250.wav"></audio></td>
+                <td style="background-color: #f9fbfd;"><audio controls src="wavs/ARFSE/NFE1/p232_250.wav"></audio></td>
+                <td style="background-color: #f9fbfd;"><audio controls src="wavs/ARFSE/NFE5/p232_250.wav"></audio></td>
+            </tr>
+
+            <tr>
+                <td class="text-left">p232_409</td>
+                <td><audio controls src="wavs/noisy/p232_409.wav"></audio></td>
+                <td><audio controls src="wavs/clean/p232_409.wav"></audio></td>
+                <td><audio controls src="wavs/FLOWSE/NFE1/p232_409.wav"></audio></td>
+                <td><audio controls src="wavs/FLOWSE/NFE5/p232_409.wav"></audio></td>
+                <td style="background-color: #f9fbfd;"><audio controls src="wavs/ARFSE/NFE1/p232_409.wav"></audio></td>
+                <td style="background-color: #f9fbfd;"><audio controls src="wavs/ARFSE/NFE5/p232_409.wav"></audio></td>
+            </tr>
+
+            <tr style="border: 2px solid #0056b3;">
+                <td class="text-left">p257_008</td>
+                <td><audio controls src="wavs/noisy/p257_008.wav"></audio></td>
+                <td><audio controls src="wavs/clean/p257_008.wav"></audio></td>
+                <td><audio controls src="wavs/FLOWSE/NFE1/p257_008.wav"></audio></td>
+                <td><audio controls src="wavs/FLOWSE/NFE5/p257_008.wav"></audio></td>
+                <td style="background-color: #eef5fc;"><audio controls src="wavs/ARFSE/NFE1/p257_008.wav"></audio></td>
+                <td style="background-color: #eef5fc;"><audio controls src="wavs/ARFSE/NFE5/p257_008.wav"></audio></td>
+            </tr>
+
+            <tr>
+                <td class="text-left">p257_033</td>
+                <td><audio controls src="wavs/noisy/p257_033.wav"></audio></td>
+                <td><audio controls src="wavs/clean/p257_033.wav"></audio></td>
+                <td><audio controls src="wavs/FLOWSE/NFE1/p257_033.wav"></audio></td>
+                <td><audio controls src="wavs/FLOWSE/NFE5/p257_033.wav"></audio></td>
+                <td style="background-color: #f9fbfd;"><audio controls src="wavs/ARFSE/NFE1/p257_033.wav"></audio></td>
+                <td style="background-color: #f9fbfd;"><audio controls src="wavs/ARFSE/NFE5/p257_033.wav"></audio></td>
+            </tr>
+
+            <tr>
+                <td class="text-left">p257_106</td>
+                <td><audio controls src="wavs/noisy/p257_106.wav"></audio></td>
+                <td><audio controls src="wavs/clean/p257_106.wav"></audio></td>
+                <td><audio controls src="wavs/FLOWSE/NFE1/p257_106.wav"></audio></td>
+                <td><audio controls src="wavs/FLOWSE/NFE5/p257_106.wav"></audio></td>
+                <td style="background-color: #f9fbfd;"><audio controls src="wavs/ARFSE/NFE1/p257_106.wav"></audio></td>
+                <td style="background-color: #f9fbfd;"><audio controls src="wavs/ARFSE/NFE5/p257_106.wav"></audio></td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <h2>2. Spectrogram Analysis (Case Study: p257_008)</h2>
+    <p style="font-style: italic; color: #666; font-size: 0.92em; margin-top: -10px;">
+        Visual comparison of spectrogram recovery across FLOWSE baseline and our proposed ARFSE framework.
+    </p>
+    
+    <div class="spec-container">
+        <img class="full-spec-img" src="specs/p257_008_comparison.svg" alt="Spectrogram Comparison for p257_008">
+    </div>
+
+</body>
+</html>
