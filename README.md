@@ -1,19 +1,18 @@
-# ARFSE:Time-Unconditional Generative Speech Enhancement via Autonomous Rectified Flow
+# ARFSE: Time-Unconditional Generative Speech Enhancement via Autonomous Rectified Flow
 
-## 关键说明
+ARFSE is a generative speech enhancement project based on `PyTorch Lightning`, supporting three methods: `arfse`, `rfse`, and `cfmse`.
 
-ARFSE 是基于 `PyTorch Lightning` 的生成式语音增强项目，支持三种方法：`arfse`、`rfse`、`cfmse`。
+## Demo
 
-## 依赖
+GitHub Pages: https://zhangwen0821.github.io/ARFSE/
 
-```bash 
-    pip install -r requirements.txt
-``` 
-## 目录
+## Dependencies
 
-- `train.py`：训练入口
-- `evaluate.py`：推理与评估
-## 数据格式
+```bash
+pip install -r requirements.txt
+```
+
+## Data Format
 
 ```
 <base_dir>/
@@ -25,42 +24,32 @@ ARFSE 是基于 `PyTorch Lightning` 的生成式语音增强项目，支持三�
   test/noisy/*.wav
 ```
 
-## 训练
+## Training
 
 ```bash
 python train.py --base_dir /path/to/dataset --backbone ncsnpp
 ```
 
-常用参数：
-- `--backbone`：ncsnpp / ncsnpplarge / ncsnpp12M / ncsnpp6M / dcunet
-- `--method`：arfse / rfse / cfmse
-- `--path_type`：denoising / generation
-- `--lr`：1e-4
-- `--batch_size`：4
-- `--n_fft`：510
-- `--hop_length`：128
-- `--num_frames`：256
+Common options:
+- `--backbone`: ncsnpp / ncsnpplarge / ncsnpp12M / ncsnpp6M / dcunet
+- `--method`: arfse / rfse / cfmse
+- `--path_type`: denoising / generation
+- `--lr`: 1e-4
+- `--batch_size`: 4
 
-## 推理
+## Inference
 
 ```bash
 python evaluate.py --test_dir /path/to/dataset --ckpt /path/to/checkpoint.ckpt --folder_destination /path/to/output --N 5
 ```
 
-## 模型权重
+## Model Weights
 
 Hugging Face: https://huggingface.co/zhangwen0821/ARFSE
 
-## Demo
+## References
 
-Github-pages: https://zhangwen0821.github.io/ARFSE/
-
-## 参考链接
-
-[dns2020testset](https://github.com/microsoft/DNS-Challenge.git)
-
-[flowmse](https://github.com/seongq/flowmse.git)
-
-[sgmse-bbed](https://github.com/sp-uhh/sgmse-bbed.git)
-
-[sgmse](https://github.com/sp-uhh/sgmse.git)
+- [dns2020testset](https://github.com/microsoft/DNS-Challenge.git)
+- [flowmse](https://github.com/seongq/flowmse.git)
+- [sgmse-bbed](https://github.com/sp-uhh/sgmse-bbed.git)
+- [sgmse](https://github.com/sp-uhh/sgmse.git)
